@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fyc-auth
+  labels:
+    app: fyc-auth
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: fyc-auth
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: fyc-auth
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: fyc-auth
+ template:
+   metadata:
+     labels:
+       app: fyc-auth
+   spec:
+     containers:
+     - name: fyc-auth
+       image: fyc-auth
+       ports:
+       - containerPort: 3000
+       resources:
+        requests:
+         memory: "256Mi"
+         cpu: "250m"
+        limits:
+         memory: "512Mi"
+         cpu: "500m"
