@@ -1,10 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
 
+app.use(cors());
+app.options('*', cors())
 app.use(bodyParser.json())
 
 // Secret key for JWT
@@ -49,4 +52,4 @@ app.get('/verify', (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-});       
+});
