@@ -1,25 +1,21 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
-// Middleware
-app.use(cors());
-app.options('*', cors())
+
 app.use(bodyParser.json())
+
 // Secret key for JWT
 const SECRET_KEY = 'my_secret_key';
 
-// Sample user (in a real application, you would fetch this from a database)
 const user = {
   id: 1,
   username: 'testuser',
-  password: 'password123' // Store hashed passwords in production!
+  password: 'password123'
 };
 
-// Route to authenticate user and generate JWT
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -37,7 +33,6 @@ app.post('/login', (req, res) => {
 });
 
 
-// Protected route
 app.get('/verify', (req, res) => {
 
     const token = req.headers['authorization'];
@@ -54,17 +49,4 @@ app.get('/verify', (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-});
-//dsqfdqs
-// ❯ curl -X GET http://localhost:3000/verify \
-// -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTcyODg2MDk1NCwiZXhwIjoxNzI4ODY0NTU0fQ.oI0QWq7swtoJu9csAt-6Ylx0fw3mOeDa3cjKgfGeMf0"
-// {"message":"Welcome to the protected route!","userId":1}%                                                                                          
-// ❯ curl -X POST http://localhost:3000/login \
-// -H "Content-Type: application/json" \
-// -d '{
-//   "username": "testuser",
-//   "password": "password123"
-// }'
-// {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTcyODg2MTEzNiwiZXhwIjoxNzI4ODY0NzM2fQ.Jar-RWckePSZNVF2aVNndidaZ1OMzlzHu2Dp17SO25s"}%                                                                                                                  
-
-// ~/fyc                      
+});       
